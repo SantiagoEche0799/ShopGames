@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAuthStore } from '../store/auth';
+import Loader from '../components/Loader';
 
 const LoginPage = () => {
 
@@ -35,7 +36,7 @@ const LoginPage = () => {
     loginMutation.mutate()
   };
 
-  if(loginMutation.isLoading) return <p>Loading...</p>
+  if(loginMutation.isLoading) return <Loader />
   if(isAuth) return (<Navigate to='/'/>)  
 
   return(

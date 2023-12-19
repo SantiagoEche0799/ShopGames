@@ -12,8 +12,28 @@ export interface Product {
     num_reviews?: number
 }
 
+export interface Order {
+    total_price: number;
+    address:string
+    city: string 
+    postal_code: string
+    order_items: Product[]
+}
+
+export interface User{
+    id?: number
+    avatar: File | null;
+    email: string
+    name: string
+    last_name: string
+}
+
 export interface Token {
-    exp: number
+    user_id: number;
+    exp: number;
     is_staff: boolean;
-    avatar: string;
+    email: string;
+    name: string;
+    last_name: string;
+    avatar: File | null;
 }

@@ -4,6 +4,7 @@ import { get_solo } from "../api/product";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCartStore } from "../store/cart";
+import Reviews from "../components/Reviews";
 
 
 const SoloProduct = () => {
@@ -16,6 +17,8 @@ const SoloProduct = () => {
     });
 
     const addToCart = useCartStore((state) => state.addToCart);
+
+    console.log(data)
 
     if (isLoading) return <Loader />;
     if (error instanceof Error) return <>{toast.error(error.message)}</>;
@@ -57,6 +60,7 @@ const SoloProduct = () => {
                     alt="office content 1"
                 />
             </div>
+            <Reviews productId={data.id} reviews={data.reviews}/>
         </div>
     );
 };

@@ -1,13 +1,16 @@
 import { Product } from '../Interfaces';
-import {authAxios, axi} from './useAxios';
+import { authAxios, axi } from './useAxios';
 
+export const create_review = async (description: string, rating: number, productId: number) => {
+    await authAxios.post(`/products/review/${productId}/`, {description, rating})
+};
 
-export const cate_api = async (category: string) =>{
+export const cate_api = async (category: string) => {
     const response = await authAxios.get(`/products/cate/${category}`)
     return response.data;
 };
 
-export const search_prod = async (query: string) =>{
+export const search_prod = async (query: string) => {
     const response = await authAxios.get(`/products/search/?query=${query}`)
     return response.data;
 };
@@ -22,7 +25,7 @@ export const get_solo_prod = async (id: number) => {
     return response.data
 };
 
-export const edit_product = async (data: Product) =>{
+export const edit_product = async (data: Product) => {
     const formData = new FormData();
 
     formData.append("name", data.name)
@@ -30,17 +33,17 @@ export const edit_product = async (data: Product) =>{
     formData.append("count_in_stock", data.count_in_stock.toString())
     formData.append("category", data.category)
     formData.append("price", data.price.toString())
-    if(data.image){
+    if (data.image) {
         formData.append("image", data.image)
     }
-    await authAxios.put(`/products/edit/${data.id}/`, formData) 
+    await authAxios.put(`/products/edit/${data.id}/`, formData)
 };
 
-export const delete_product = async(id: number) =>{
+export const delete_product = async (id: number) => {
     await authAxios.delete(`/products/delete/${id}/`)
 }
 
-export const post_product = async (data: Product) =>{
+export const post_product = async (data: Product) => {
     const formData = new FormData();
 
     formData.append("name", data.name)
@@ -48,12 +51,12 @@ export const post_product = async (data: Product) =>{
     formData.append("count_in_stock", data.count_in_stock.toString())
     formData.append("category", data.category)
     formData.append("price", data.price.toString())
-    if(data.image){
+    if (data.image) {
         formData.append("image", data.image)
     }
-    await authAxios.post('/products/post/', formData) 
+    await authAxios.post('/products/post/', formData)
 }
-
+//Revisar a fondo este metodo cuando elimino un producto
 export const get_products = async ({ pageParam = 1}) => {
     const response = await axi.get(`/products/?page=${pageParam}&pages=9`)
     return response.data

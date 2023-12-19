@@ -3,7 +3,7 @@
 import { BsFillTrashFill } from "react-icons/bs";
 import { AiFillEdit } from "react-icons/ai";
 import { FaPlusCircle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { delete_product, get_products } from "../api/product";
 import {
     useMutation,
@@ -34,16 +34,14 @@ const Products = ( {results} : Props) => {
         getNextPageParam: (page: any) => page.meta.next,
     });
 
-    console.log(data);
-
     useEffect(() => {
         if (inView) {
             fetchNextPage();
         }
     }, [inView]);
-    const navigate = useNavigate()
-    console.log(data)
+
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const deleteProdMutation = useMutation({
         mutationFn: delete_product,
@@ -51,12 +49,14 @@ const Products = ( {results} : Props) => {
             queryClient.invalidateQueries({ queryKey: ["products"] });
             toast.success("Product deleted!");
             navigate('/admin')
+            
 
         },
         onError: (error) => {
             console.error(error);
-            toast.error("Error!");
             navigate('/admin')
+            toast.error("Error!");
+            
         },
     });
 
@@ -95,7 +95,10 @@ const Products = ( {results} : Props) => {
 
                     </tr>
                 </thead>
-
+                {/**Para hacer la busqueda en tiempo real.
+                 * Si hay resultados, mostramos los resultados de la busqueda
+                 * de lo contrario mostramos loq que ya existe
+                 */}
                 {results && results.products.length > 0 ? (
                     <>
                         {results &&
@@ -219,7 +222,7 @@ const Products = ( {results} : Props) => {
                                         <div ref={ref}>
                                             {isLoading || isFetchingNextPage ? (
                                                 <Loader />
-                                            ) : null}
+                                            ) : data.pages.length}
                                         </div>
                                     )}
                             </>

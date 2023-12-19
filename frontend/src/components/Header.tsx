@@ -15,6 +15,7 @@ import { Token } from "../Interfaces";
 // new
 import { useSearchStore } from "../store/search";
 
+
 const Header = () => {
     const { toggleDarkMode, darkMode } = useDarkMode();
     const token: string = useAuthStore.getState().access;
@@ -30,13 +31,24 @@ const Header = () => {
 
     let is_admin: boolean;
     let avatar: string;
+    //let user_id: number
 
     if (isAuth) {
         const tokenDecoded: Token = jwt_decode(token);
         //console.log(tokenDecoded);
         is_admin = tokenDecoded.is_staff;
-        avatar = tokenDecoded.avatar;
+        //user_id = tokenDecoded.user_id
+        avatar = String(tokenDecoded.avatar)
     }
+
+    /**
+     * Esto daña la ventana de para administrara usuarios en el Admin Panel
+     *  const { data: user, } = useQuery({
+        queryKey: ["user"],
+        queryFn: () => get_solo_user(user_id),
+    });
+     */
+
 
     function logOutFun() {
         useAuthStore.getState().logout();
@@ -47,8 +59,8 @@ const Header = () => {
         return classes.filter(Boolean).join(" ");
     }
 
-    // data array de productos
 
+    // data array de productos
     return (
         <Disclosure as="nav" className="bg-grey dark:bg-gray-800">
             {({ open }) => (
@@ -181,11 +193,11 @@ const Header = () => {
                                         <div>
                                             <Menu.Button className="flex rounded-full ml-8 text-sm focus:outline-none ">
                                                 <span className="sr-only">Open user menu</span>
-                                                <img
-                                                    className="h-8 w-8 rounded-full"
-                                                    src={`${import.meta.env.VITE_BACKEND_URL}${avatar}`}
-                                                    alt=""
-                                                />
+                                                    <img
+                                                        className="h-8 w-8 rounded-full"
+                                                        src={`${import.meta.env.VITE_BACKEND_URL}${avatar}`}
+                                                        alt=""
+                                                    />
                                             </Menu.Button>
                                         </div>
                                         <Transition
@@ -200,15 +212,15 @@ const Header = () => {
                                             <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right bg-white dark:bg-slate-950 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <Menu.Item>
                                                     {({ active }) => (
-                                                        <a
-                                                            href="#"
+                                                        <Link
+                                                            to="/profile"
                                                             className={classNames(
                                                                 active ? "bg-gray-100 dark:bg-slate-700" : "",
                                                                 "block px-4 py-2 text-sm text-gray-700 dark:text-slate-200"
                                                             )}
                                                         >
                                                             Your Profile
-                                                        </a>
+                                                        </Link>
                                                     )}
                                                 </Menu.Item>
                                                 <Menu.Item>

@@ -10,7 +10,9 @@ import EditProductPage from './pages/EditProductPage';
 import SoloProduct from './pages/SoloProduct';
 import CatePage from './pages/CatePage';
 import SearchByCate from './pages/SearchByCate';
-
+import CartPage from './pages/CartPage';
+import UserProfile from './pages/UserProfile';
+import SoloOrder from './pages/SoloOrder';
 
 
 function App() {
@@ -26,9 +28,10 @@ function App() {
                 <Route path='cate' element={<CatePage />}/>
                 <Route path='cate/:cate' element={<SearchByCate />}/>
                 
-                
                 <Route element={<PrivateRoute/>}>
-
+                    <Route path='cart' element={<CartPage />}/>
+                    <Route path='profile' element={<UserProfile />}/>
+                    <Route path='order/:id' element={<SoloOrder />}/>
                 </Route>
 
                 <Route path="admin" element={<AdminPrivateRoute/>}>

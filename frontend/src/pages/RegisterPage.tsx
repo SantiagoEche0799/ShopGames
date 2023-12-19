@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAuthStore } from '../store/auth';
+import Loader from '../components/Loader';
 
 
 const RegisterPage = () => {
@@ -48,7 +49,7 @@ const RegisterPage = () => {
     }
   };
 
-  if(registerMutation.isLoading) return <p>Loading...</p>
+  if(registerMutation.isLoading) return <Loader />
   if(isAuth) return (<Navigate to='/'/>)  
 
   return(

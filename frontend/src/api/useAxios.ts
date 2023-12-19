@@ -1,6 +1,7 @@
 import axios, { AxiosRequestHeaders } from 'axios'
 import jwt_decode from 'jwt-decode';
 import { useAuthStore } from '../store/auth';
+import { Token } from '../Interfaces';
 
 // const baseURL = "http://127.0.0.1:8000";
 
@@ -27,10 +28,6 @@ authAxios.interceptors.request.use(async (config) =>{
     config.headers = {
         Authorization: `Bearer ${token}`,
     }as AxiosRequestHeaders;
-
-    type Token = {
-        exp: number
-    };
 
     const tokenDecoded: Token = jwt_decode(token)
 
